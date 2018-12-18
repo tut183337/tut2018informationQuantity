@@ -84,7 +84,7 @@ public class TestCase {
 			System.out.println("Exception occurred: STOP");
 		}
 
-		System.out.println("TestCase for Frequencer: TARGET length is zero.");
+		System.out.println("TestCase for Frequencer: TARGET's length is zero.");
 		try {
 			FrequencerInterface  myObject;
 			int freq;
@@ -115,7 +115,7 @@ public class TestCase {
 			System.out.println("Exception occurred: STOP");
 		}
 
-		System.out.println("TestCase for Frequencer: SPACE length is zero.");
+		System.out.println("TestCase for Frequencer: SPACE's length is zero.");
 		try {
 			FrequencerInterface  myObject;
 			int freq;

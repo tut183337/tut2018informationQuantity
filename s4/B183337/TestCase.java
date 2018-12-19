@@ -121,7 +121,7 @@ public class TestCase {
 			System.out.println("Exception occurred: STOP");
 		}
 
-
+		System.out.println("TestCase for InformationEstimator: Default");
 		try {
 			InformationEstimatorInterface myObject;
 			double value;
@@ -140,6 +140,49 @@ public class TestCase {
 			myObject.setTarget("00".getBytes());
 			value = myObject.estimation();
 			System.out.println(">00 "+value);
+		}
+		catch(Exception e) {
+			System.out.println("Exception occurred: STOP");
+		}
+
+		System.out.println("TestCase for InformationEstimator: TARGET is not set.");
+		try {
+			InformationEstimatorInterface myObject;
+			double value;
+			System.out.println("checking s4.B183337.InformationEstimator");
+			myObject = new s4.B183337.InformationEstimator();
+			myObject.setSpace("3210321001230123".getBytes());
+			value = myObject.estimation();
+			System.out.println(">0 "+value);
+		}
+		catch(Exception e) {
+			System.out.println("Exception occurred: STOP");
+		}
+
+		System.out.println("TestCase for InformationEstimator: TARGET's length is zero.");
+		try {
+			InformationEstimatorInterface myObject;
+			double value;
+			System.out.println("checking s4.B183337.InformationEstimator");
+			myObject = new s4.B183337.InformationEstimator();
+			myObject.setSpace("3210321001230123".getBytes());
+			myObject.setTarget("".getBytes());
+			value = myObject.estimation();
+			System.out.println(">\"\" "+value);
+		}
+		catch(Exception e) {
+			System.out.println("Exception occurred: STOP");
+		}
+
+		System.out.println("TestCase for InformationEstimator: SPACE is not set.");
+		try {
+			InformationEstimatorInterface myObject;
+			double value;
+			System.out.println("checking s4.B183337.InformationEstimator");
+			myObject = new s4.B183337.InformationEstimator();
+			myObject.setTarget("0".getBytes());
+			value = myObject.estimation();
+			System.out.println(">0 "+value);
 		}
 		catch(Exception e) {
 			System.out.println("Exception occurred: STOP");

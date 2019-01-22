@@ -34,9 +34,9 @@ public class Frequencer implements FrequencerInterface{
 	if(spaceReady) {
 		for(int i=0; i< mySpace.length; i++) {
 		int s = suffixArray[i];
-		for(int j=s;j<mySpace.length;j++) {
+			for(int j=s;j<mySpace.length;j++) {
 			System.out.write(mySpace[j]);
-		}
+			}
 		System.out.write('\n');
 		}
 	}
@@ -57,35 +57,18 @@ public class Frequencer implements FrequencerInterface{
 	//
 	// ****	 Please write code here... ***
 	//
-	int i2 = i;
-	int j2 = j;
-	for(int k = 0; k < mySpace.length-Math.max(i2, j2); k++){
-	if(mySpace[i] > mySpace[j]){
-		return 1;
+
+	int max_ij = Math.max(i, j);
+	for(int k = 0; k < mySpace.length-max_ij; k++){
+	if(mySpace[i] > mySpace[j])         return 1;
+	else if(mySpace[i] < mySpace[j])	return -1;
+	else if(mySpace[i] == mySpace[j]){  i++; j++; continue; }
 	}
-	else if(mySpace[i] < mySpace[j]){
-		return -1;
-	}
-	else if(mySpace[i] == mySpace[j]){
-		i++;
-		j++;
-		continue;
-	}
-	else{
-	}		
-	//return 1; // This line should be modified.
-	}
-	if(i > j){
-		return -1;
-	}
-	else if(i < j){
-		return 1;
-	}
-	else if(i == j){
-		return 0;
-	}
-	else{
-	}
+	//  文字列の長いほうが後ろになるようにi,jを比較する
+	if(i > j)		return -1;
+	else if(i < j)	return 1;
+	else if(i == j)	return 0;
+	else ;
 	return 0;
 	}
 
@@ -132,23 +115,14 @@ public class Frequencer implements FrequencerInterface{
 	// "Ho"		 =	   "Ho"
 	// "Ho"		 <	   "Ho "   : "Ho " is not in the head of suffix "Ho"
 	// "Ho"		 =	   "H"	   : "H" is in the head of suffix "Ho"
-	//
-	// ****	 Please write code here... ***
-	//
-	if(mySpace[i] > myTarget[j]){
-		return 1;
-	}else if(mySpace[i] < myTarget[j]){
-		return -1;
-	}else if(mySpace[i] == myTarget[j]){
-		if(mySpace.length-i < end-j){
-			return 1;
-		}
+
+	if(mySpace[i] > myTarget[j]) 		return 1;
+	else if(mySpace[i] < myTarget[j]) 	return -1;
+	else if(mySpace[i] == myTarget[j]){
+		if(mySpace.length-i < end-j) 		return -1;
 		for(j++, i++; j < end; j++, i++){
-			if(mySpace[i] > myTarget[j]){
-				return 1;
-			}else if(mySpace[i] < myTarget[j]){
-				return -1;
-			}
+			if(mySpace[i] > myTarget[j])	  return 1;
+			else if(mySpace[i] < myTarget[j]) return -1;
 		}
 	}
 	return 0;
@@ -163,9 +137,7 @@ public class Frequencer implements FrequencerInterface{
 	// ****	 Please write code here... ***
 	//
 	for(int i = 0; i < suffixArray.length ; i++){
-		if(targetCompare(suffixArray[i], start, end) == 0){
-			return i;
-		}
+		if(targetCompare(suffixArray[i], start, end) == 0) return i;
 	}
 	return suffixArray.length; // This line should be modified.
 	}
@@ -180,12 +152,9 @@ public class Frequencer implements FrequencerInterface{
 	//
 	for(int i = 0; i < suffixArray.length; i++){
 		if(targetCompare(suffixArray[i], start, end) == 0){
-			for(i++; i < suffixArray.length; i++){
-				if(targetCompare(suffixArray[i], start, end) == 1){
-					return i;
-				}
-			}
-
+		for(i++; i < suffixArray.length; i++){
+			if(targetCompare(suffixArray[i], start, end) == 1) return i;
+		}
 		}
 	}
 	return suffixArray.length; // This line should be modified.
@@ -250,11 +219,11 @@ public class Frequencer implements FrequencerInterface{
 		//  TestCase 1
 		Frequencer testObj = new Frequencer();
 		testObj.setSpace("Hi Ho Hi Ho".getBytes());
-		testObj.setTarget("Ho".getBytes());
+		testObj.setTarget("Ho ".getBytes());
 
 		System.out.println("TestCase 1: ");
 		System.out.println("Space  : \"Hi Ho Hi Ho\"");
-		System.out.println("Target : \"Ho\"");
+		System.out.println("Target : \"Ho \"");
 
 		System.out.println("\n-- printSuffixArray()");
 		testObj.printSuffixArray();

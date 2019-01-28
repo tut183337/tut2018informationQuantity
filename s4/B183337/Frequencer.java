@@ -150,12 +150,8 @@ public class Frequencer implements FrequencerInterface{
 	//
 	// ****	 Please write code here... ***
 	//
-	for(int i = 0; i < suffixArray.length; i++){
-		if(targetCompare(suffixArray[i], start, end) == 0){
-		for(i++; i < suffixArray.length; i++){
-			if(targetCompare(suffixArray[i], start, end) == 1) return i;
-		}
-		}
+	for(int i = suffixArray.length-1; i  >= 0; i--){
+		if(targetCompare(suffixArray[i], start, end) == 0)  return i+1;
 	}
 	return suffixArray.length; // This line should be modified.
 	}

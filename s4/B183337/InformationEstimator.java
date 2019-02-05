@@ -20,6 +20,8 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	byte [] myTarget; // data to compute its information quantity
 	byte [] mySpace;  // Sample space to compute the probability
 	FrequencerInterface myFrequencer;  // Object for counting frequency
+	boolean targetReady = false; // myTarget setting state
+	boolean spaceReady = false;  // mySpace setting state
 
 	byte [] subBytes(byte [] x, int start, int end) {
 		// corresponding to substring of String for  byte[] ,
@@ -34,10 +36,11 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		return  - Math.log10((double) freq / (double) mySpace.length) / Math.log10((double) 2.0);
 	}
 
-	public void setTarget(byte [] target) { myTarget = target;}
+	public void setTarget(byte [] target) { targetReady = true; myTarget = target;}
 	public void setSpace(byte [] space) {
 		myFrequencer = new Frequencer();
 		mySpace = space; myFrequencer.setSpace(space);
+		spaceReady = true;
 	}
 
 /*
@@ -59,14 +62,23 @@ public class InformationEstimator implements InformationEstimatorInterface{
 */
 
 	public double estimation(){
+		if(!targetReady) return 0.0;
+		if(!spaceReady) return Double.MAX_VALUE;
+
 		boolean [] partition = new boolean[myTarget.length+1];
 		int np;
 		np = 1<<(myTarget.length-1);
 
-		double [] iqArray = new double[np];
+		double [] iqArray = new double[myTarget.length];	// result of function iq() 
+		double result;  // temp 
+		// begin conputing
+		for(int i=0; i<myTarget.length; i++){
+			double value=Double.MAX_VALUE; //value = mininimum of each "value1".
+			for(int j=i; j>0;){}
+		}
 
 		// System.out.println("np="+np+" length="+myTarget.length);
-		double value = Double.MAX_VALUE; // value = mininimum of each "value1".
+		//double value = Double.MAX_VALUE; // value = mininimum of each "value1".
 
 		for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
 			// binary representation of p forms partition.
@@ -91,15 +103,18 @@ public class InformationEstimator implements InformationEstimatorInterface{
 					// System.out.write(myTarget[end]);
 					end++;
 				}
-				double min = Double.MAX_VALUE;
+				// double min = Double.MAX_VALUE;
 				// System.out.print("("+start+","+end+")");
+				
+				/*
 				myFrequencer.setTarget(subBytes(myTarget, start, end));
 				for(int i=0; i<subByte(myTarget, start, end).length-1; i++){
 					min = Math.min(min, iqArray[]+iqArray[]);
 				}
 				iqArray[i] = Math.min(min ,iq(myFrequencer.frequency()));
+				*/
 
-				//value1 = value1 + iq(myFrequencer.frequency());
+				value1 = value1 + iq(myFrequencer.frequency());
 				start = end;
 			}
 			// System.out.println(" "+ value1);

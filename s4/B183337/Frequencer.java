@@ -80,7 +80,7 @@ public class Frequencer implements FrequencerInterface{
 		suffixArray[i] = i;
 	}
 
-	
+	/*
 	//  Bubble Sort
 	for (int i = 0; i < suffixArray.length - 1; i++) {
 	for (int j = suffixArray.length - 1; j > i; j--) {
@@ -93,7 +93,7 @@ public class Frequencer implements FrequencerInterface{
 		}
 	}
 	}
-	
+	*/
 
 	//  like Quick Sort
 	quickSort(0, suffixArray.length-1);
@@ -108,7 +108,7 @@ public class Frequencer implements FrequencerInterface{
 		while(p<=end && 0==suffixCompare(suffixArray[start], suffixArray[p])) p++;
 		if(p>end) return -1;
 		if(-1==suffixCompare(suffixArray[start], suffixArray[p])) return start;
-		System.out.println("in pivot p:"+p);
+		//System.out.println("in pivot p:"+p);
 		return p;
 	}
 	private int partition(int start, int end, int axis){
@@ -119,10 +119,10 @@ public class Frequencer implements FrequencerInterface{
 		while(l<=r){
 			//while(l<=end && -1==suffixCompare(suffixArray[l], suffixArray[axis])) l++;
 			//while(r>=start && 0<=suffixCompare(suffixArray[axis], suffixArray[r])) r--;
-			while(l<=end && -1==suffixCompare(suffixArray[l], suffixArray[axis])) l++;
-			while(r>=start && 0<=suffixCompare(suffixArray[r], suffixArray[axis])) r--;
+			while(l<=end && 1==suffixCompare(suffixArray[l], suffixArray[axis])) l++;
+			while(r>=start && -1==suffixCompare(suffixArray[axis], suffixArray[r])) r--;
 			if(l>r) break;
-			int t=suffixArray[l]; suffixArray[l]=suffixArray[r]; suffixArray[r]=t;	//  replace
+			int t=suffixArray[l]; suffixArray[l]=suffixArray[r]; suffixArray[r]=t;	//  swap
 			l++; r--;
 		}
 		return l;	

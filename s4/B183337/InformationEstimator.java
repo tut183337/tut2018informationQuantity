@@ -1,4 +1,4 @@
-package s4.B183337; // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID.
+package s4.B183337;
 import java.lang.*;
 import s4.specification.*;
 
@@ -27,7 +27,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		// corresponding to substring of String for  byte[] ,
 		// It is not implement in class library because internal structure of byte[] requires copy.
 		byte [] result = new byte[end - start];
-		for(int i = 0; i<end - start; i++) { result[i] = x[start + i]; };
+		for(int i=0; i<end-start; i++) { result[i] = x[start + i]; };
 		return result;
 	}
 
@@ -48,7 +48,8 @@ public class InformationEstimator implements InformationEstimatorInterface{
 
 	public double estimation(){
 		// "iqArray" that is keeping Results of Information Quantity.
-		double [] iqArray = new double[myTarget.length+1]; iqArray[0] = 0.0;
+		double [] iqArray = new double[myTarget.length+1];
+		iqArray[0] = 0.0; // "iqArray[0]" is not changed by Computing Information Quantity.
 		if(!targetReady) return 0.0; // When Target length is 0 or Target is not setted.
 		if(!spaceReady)  return Double.MAX_VALUE; // When Space is not setted.
 		myFrequencer.setTarget(myTarget); // Set Target that is not subByte.
@@ -68,6 +69,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	public static void main(String[] args) {
 		InformationEstimator myObject;
 		double value;
+		if(args.length!=0 && args[0].equals("test")){
 		myObject = new InformationEstimator();
 		myObject.setSpace("3210321001230123".getBytes());
 		myObject.setTarget("0".getBytes());
@@ -82,5 +84,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		myObject.setTarget("00".getBytes());
 		value = myObject.estimation();
 		System.out.println(">00 "+value);
+		}
+		
 	}
 }

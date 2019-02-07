@@ -152,7 +152,7 @@ public class Frequencer implements FrequencerInterface{
 	return 0;
 	}
 
-	private int subByteStartIndex(int start, int end) {
+		private int subByteStartIndex(int start, int end) {
 	// It returns the index of the first suffix which is equal or greater than subBytes;
 	// not implemented yet;
 	// For "Ho", it will return 5  for "Hi Ho Hi Ho".
@@ -160,13 +160,13 @@ public class Frequencer implements FrequencerInterface{
 
 	/* * * * * * * * * * * * 
 	* Linear Search
-	* * * * * * * * * * * * */
-	/*
+	* * * * * * * * * * * * *
+	
 	for(int i=0; i<suffixArray.length; i++){
 		if(targetCompare(suffixArray[i], start, end) == 0) return i;
 	}
 	return suffixArray.length; 
-	*/
+	
 
 	/* * * * * * * * * * * * 
 	* Binary Search
@@ -209,14 +209,13 @@ public class Frequencer implements FrequencerInterface{
 	while(left<=right){
 		mid = (left+right)/2;
 		int tComp = targetCompare(suffixArray[mid], start, end);
-		if(tComp <= 0) left=mid+1;
-		else{ index=mid; right=mid-1; }
+		if(tComp == -1) left=mid+1;
+		else if(tComp == 1) right=mid-1;
+		else{ index=mid+1; left=mid+1; }
 	}
 	return index;
 	}
 	
-
-
 	public int subByteFrequency(int start, int end) {
 	/* This method be work as follows, but
 	int spaceLength = mySpace.length;

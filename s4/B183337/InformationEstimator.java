@@ -36,95 +36,35 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		return  - Math.log10((double) freq / (double) mySpace.length) / Math.log10((double) 2.0);
 	}
 
-	public void setTarget(byte [] target) { targetReady = true; myTarget = target;}
+	public void setTarget(byte [] target) {
+		myTarget = target;
+		if(myTarget.length != 0) targetReady = true;
+	}
 	public void setSpace(byte [] space) {
 		myFrequencer = new Frequencer();
 		mySpace = space; myFrequencer.setSpace(space);
 		spaceReady = true;
 	}
 
-/*
 	public double estimation(){
-		boolean [] partition = new boolean[myTarget.length+1];
-
-		int np;
-		np = 1<<(myTarget.length-1);
-		double [] iqArray = new double[np];
-
-		double value = Double.MAX_VALUE;
-
-		iqArray[0] = -1;	//	iqArray[0] is not used.
-		for(int i=0, j=1; i<myTarget.length-1; i++, j++){
-			myFrequencer.setTarget(subByte(myTarget, i, j));
-			iqArray[i+1] = iq(myFrequencer.frequency());
-		}
-	}
-*/
-
-	public double estimation(){
-		if(!targetReady) return 0.0;
-		if(!spaceReady) return Double.MAX_VALUE;
-
-		boolean [] partition = new boolean[myTarget.length+1];
-		int np;
-		np = 1<<(myTarget.length-1);
-
-		double [] iqArray = new double[myTarget.length];	// result of function iq() 
-		double result;  // temp 
-		// begin conputing
+		// "iqArray" that is keeping Results of Information Quantity.
+		double [] iqArray = new double[myTarget.length+1]; iqArray[0] = 0.0;
+		if(!targetReady) return 0.0; // When Target length is 0 or Target is not setted.
+		if(!spaceReady)  return Double.MAX_VALUE; // When Space is not setted.
+		myFrequencer.setTarget(myTarget); // Set Target that is not subByte.
+		// Begin Computing Information Quantity
 		for(int i=0; i<myTarget.length; i++){
-			double value=Double.MAX_VALUE; //value = mininimum of each "value1".
-			for(int j=i; j>0;){}
-		}
-
-		// System.out.println("np="+np+" length="+myTarget.length);
-		//double value = Double.MAX_VALUE; // value = mininimum of each "value1".
-
-		for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
-			// binary representation of p forms partition.
-			// for partition {"ab" "cde" "fg"}
-			// a b c d e f g   : myTarget
-			// T F T F F T F T : partition:
-			partition[0] = true; // I know that this is not needed, but.
-			for(int i=0; i<myTarget.length -1;i++) {
-				  partition[i+1] = (0 !=((1<<i) & p));
+			double value=Double.MAX_VALUE; // value = minimum of each "value1".
+			for(int j=i; j>=0; j--){
+				int freq=myFrequencer.subByteFrequency(j, i+1);
+				double value1 = iqArray[j] + iq(freq);
+				if(value > value1) value = value1; // "value" is replaced minimum value.
 			}
-			partition[myTarget.length] = true;
-
-			// Compute Information Quantity for the partition, in "value1"
-			// value1 = IQ(#"ab")+IQ(#"cde")+IQ(#"fg") for the above example
-			double value1 = (double) 0.0;
-			int end = 0;;
-			int start = end;
-			while(start<myTarget.length) {
-				// System.out.write(myTarget[end]);
-				end++;
-				while(partition[end] == false) {
-					// System.out.write(myTarget[end]);
-					end++;
-				}
-				// double min = Double.MAX_VALUE;
-				// System.out.print("("+start+","+end+")");
-				
-				/*
-				myFrequencer.setTarget(subBytes(myTarget, start, end));
-				for(int i=0; i<subByte(myTarget, start, end).length-1; i++){
-					min = Math.min(min, iqArray[]+iqArray[]);
-				}
-				iqArray[i] = Math.min(min ,iq(myFrequencer.frequency()));
-				*/
-
-				value1 = value1 + iq(myFrequencer.frequency());
-				start = end;
-			}
-			// System.out.println(" "+ value1);
-
-			// Get the minimal value in "value"
-			if(value1 < value) value = value1;
+			iqArray[i+1] = value; // Record computed Information Quantity in iqArray.
 		}
-
-		return value;
+		return iqArray[myTarget.length]; // Return the desired Information Quantity.
 	}
+
 	public static void main(String[] args) {
 		InformationEstimator myObject;
 		double value;

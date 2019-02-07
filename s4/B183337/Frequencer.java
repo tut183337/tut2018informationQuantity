@@ -59,15 +59,15 @@ public class Frequencer implements FrequencerInterface{
 	//
 
 	int max_ij = Math.max(i, j);
-	for(int k = 0; k < mySpace.length-max_ij; k++){
-	if(mySpace[i] > mySpace[j])         return 1;
-	else if(mySpace[i] < mySpace[j])	return -1;
-	else if(mySpace[i] == mySpace[j]){  i++; j++; continue; }
+	for(int k=0; k<mySpace.length-max_ij; k++){
+		if(mySpace[i] > mySpace[j])         return 1;
+		else if(mySpace[i] < mySpace[j])    return -1;
+		else if(mySpace[i] == mySpace[j]){  i++; j++; continue; }
 	}
 	//  文字列の長いほうが後ろになるようにi,jを比較する
 	if(i > j)		return -1;
-	else if(i < j)	return 1;
-	else if(i == j)	return 0;
+	else if(i < j)	return  1;
+	else if(i == j)	return  0;
 	else ;
 	return 0;
 	}
@@ -75,13 +75,14 @@ public class Frequencer implements FrequencerInterface{
 	public void setSpace(byte []space) { 
 	mySpace = space; if(mySpace.length>0) spaceReady = true; 
 	suffixArray = new int[space.length];
-	// put all suffixes	 in suffixArray. Each suffix is expressed by one integer.
-	for(int i = 0; i< space.length; i++) {
-		suffixArray[i] = i;
+	// put all suffixes	in suffixArray. Each suffix is expressed by one integer.
+	for(int i=0; i<space.length; i++) {
+		suffixArray[i]=i;
 	}
-
+	/* * * * * * * * * * * * * * * * * * * * 
+	*  Like Bubble Sort
+	* * * * * * * * * * * * * * * * * * * * */
 	/*
-	//  Bubble Sort
 	for (int i = 0; i < suffixArray.length - 1; i++) {
 	for (int j = suffixArray.length - 1; j > i; j--) {
 		int tmpNum = suffixArray[j-1];
@@ -95,7 +96,9 @@ public class Frequencer implements FrequencerInterface{
 	}
 	*/
 
-	//  like mergeSort
+	/* * * * * * * * * * * * * * * * * * * * 
+	*  Like merge sort
+	* * * * * * * * * * * * * * * * * * * * */
 	mergeSort(suffixArray);
 	}
 
@@ -144,12 +147,12 @@ public class Frequencer implements FrequencerInterface{
 	// "Ho"		 <	   "Ho "   : "Ho " is not in the head of suffix "Ho"
 	// "Ho"		 =	   "H"	   : "H" is in the head of suffix "Ho"
 
-	if(mySpace[i] > myTarget[j]) 		return 1;
-	else if(mySpace[i] < myTarget[j]) 	return -1;
+	if(mySpace[i] > myTarget[j])        return  1;
+	else if(mySpace[i] < myTarget[j])   return -1;
 	else if(mySpace[i] == myTarget[j]){
-		if(mySpace.length-i < end-j) 		return -1;
-		for(j++, i++; j < end; j++, i++){
-			if(mySpace[i] > myTarget[j])	  return 1;
+		if(mySpace.length-i < end-j)          return -1;
+		for(j++, i++; j<end; j++, i++){
+			if(mySpace[i] > myTarget[j])      return  1;
 			else if(mySpace[i] < myTarget[j]) return -1;
 		}
 	}
@@ -164,7 +167,7 @@ public class Frequencer implements FrequencerInterface{
 	//
 	// ****	 Please write code here... ***
 	//
-	for(int i = 0; i < suffixArray.length ; i++){
+	for(int i=0; i<suffixArray.length; i++){
 		if(targetCompare(suffixArray[i], start, end) == 0) return i;
 	}
 	return suffixArray.length; // This line should be modified.
@@ -178,7 +181,7 @@ public class Frequencer implements FrequencerInterface{
 	//
 	// ****	 Please write code here... ***
 	//
-	for(int i = suffixArray.length-1; i  >= 0; i--){
+	for(int i=suffixArray.length-1; i>=0; i--){
 		if(targetCompare(suffixArray[i], start, end) == 0)  return i+1;
 	}
 	return suffixArray.length; // This line should be modified.

@@ -95,47 +95,33 @@ public class Frequencer implements FrequencerInterface{
 	}
 	*/
 
-	//  like Quick Sort
-	quickSort(0, suffixArray.length-1);
+	//  like mergeSort
+	mergeSort(suffixArray);
 	}
 
-	private int pivot(int start, int end){
-	// selecting pivot for quicksort
-	// In order, among the two different elements found at first,
-	// Return index of the larger element
-	// If all elements arer the same, return -1 
-		int p = start+1;	// pivot
-		while(p<=end && 0==suffixCompare(suffixArray[start], suffixArray[p])) p++;
-		if(p>end) return -1;
-		if(-1==suffixCompare(suffixArray[start], suffixArray[p])) return start;
-		//System.out.println("in pivot p:"+p);
-		return p;
-	}
-	private int partition(int start, int end, int axis){
-	// Partitioning for quicksort.
-	// Elements smaller than "axis" are in front, larger elements come in the back.
-	// Returns the index of a larger element.
-		int l=start, r=end;
-		while(l<=r){
-			//while(l<=end && -1==suffixCompare(suffixArray[l], suffixArray[axis])) l++;
-			//while(r>=start && 0<=suffixCompare(suffixArray[axis], suffixArray[r])) r--;
-			while(l<=end && 1==suffixCompare(suffixArray[l], suffixArray[axis])) l++;
-			while(r>=start && -1==suffixCompare(suffixArray[axis], suffixArray[r])) r--;
-			if(l>r) break;
-			int t=suffixArray[l]; suffixArray[l]=suffixArray[r]; suffixArray[r]=t;	//  swap
-			l++; r--;
+	private void merge(int [] spa1, int [] spa2){
+	// Merging for mergeSort()
+	// Merge two arrais;
+		int i=0, j=0;
+		while(i<spa1.length || j<spa2.length){
+		if(j>=spa2.length || (i<spa1.length && 1==suffixCompare(spa1[i], spa2[j]))){
+			suffixArray[i+j] = spa1[i]; i++;
+		}else{
+			suffixArray[i+j] = spa2[j]; j++;
 		}
-		return l;	
+		}
 	}
-	private void quickSort(int start, int end){
-	// quicksort for suffixArray.
+	private void mergeSort(int []array){
+	// mergeSort for suffixArray.
 	// Sorting suffixArray in the correct order. 
-		if(start==end) return;
-		int p=pivot(start, end);
-		if(p!=-1){
-			int k=partition(start, end, p);
-			quickSort(start, k-1);
-			quickSort(k, end);
+		if(array.length>1){
+		int m=array.length/2, n=array.length-m;	// ２つに分割
+		int [] spa1=new int[m], [] spa2=new int[n];
+		for(int i = 0; i < m; i++) spa1[i]=array[i];
+		for(int i = 0; i < n; i++) spa2[i]=array[i+m];
+		mergeSort(spa1);
+		mergeSort(spa2);
+		merge(spa1, spa2);
 		}
 	}
 

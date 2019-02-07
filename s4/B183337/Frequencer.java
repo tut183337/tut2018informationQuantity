@@ -99,29 +99,29 @@ public class Frequencer implements FrequencerInterface{
 	mergeSort(suffixArray);
 	}
 
-	private void merge(int [] spa1, int [] spa2){
+	private void merge(int []spa1, int []spa2, int []array){
 	// Merging for mergeSort()
 	// Merge two arrais;
 		int i=0, j=0;
 		while(i<spa1.length || j<spa2.length){
-		if(j>=spa2.length || (i<spa1.length && 1==suffixCompare(spa1[i], spa2[j]))){
-			suffixArray[i+j] = spa1[i]; i++;
-		}else{
-			suffixArray[i+j] = spa2[j]; j++;
-		}
+			if(j>=spa2.length || (i<spa1.length && suffixCompare(spa1[i], spa2[j])==-1)){
+				array[i+j] = spa1[i]; i++;
+			}else{
+				array[i+j] = spa2[j]; j++;
+			}
 		}
 	}
 	private void mergeSort(int []array){
 	// mergeSort for suffixArray.
 	// Sorting suffixArray in the correct order. 
 		if(array.length>1){
-		int m=array.length/2, n=array.length-m;	// ２つに分割
-		int [] spa1=new int[m], [] spa2=new int[n];
-		for(int i = 0; i < m; i++) spa1[i]=array[i];
-		for(int i = 0; i < n; i++) spa2[i]=array[i+m];
-		mergeSort(spa1);
-		mergeSort(spa2);
-		merge(spa1, spa2);
+			int m=array.length/2, n=array.length-m;	// ２つに分割
+			int [] spa1=new int[m]; // First splited array.
+			int [] spa2=new int[n]; // Second splited array.
+			for(int i=0; i<m; i++) spa1[i]=array[i];
+			for(int i=0; i<n; i++) spa2[i]=array[i+m];
+			mergeSort(spa1); mergeSort(spa2);
+			merge(spa1, spa2, array);
 		}
 	}
 

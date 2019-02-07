@@ -238,6 +238,7 @@ public class Frequencer implements FrequencerInterface{
  * Debbuging TestCase
  ************************************
 */
+/*
 		//  TestCase 1
 		Frequencer testObj = new Frequencer();
 		testObj.setSpace("Hi Ho Hi Ho".getBytes());
@@ -256,6 +257,7 @@ public class Frequencer implements FrequencerInterface{
 		System.out.println("\n-- subByteEndIndex()");
 		System.out.println("\tsubByteEndIndex : "+testObj.subByteEndIndex(0, testObj.myTarget.length));
 		System.out.println("===============================================");
+*/
 /*	
 		//  TestCase 2
 		testObj.setSpace("Hi Ho".getBytes());

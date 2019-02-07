@@ -97,7 +97,7 @@ public class Frequencer implements FrequencerInterface{
 
 	private void merge(int []spa1, int []spa2, int []array){
 	// Merging for mergeSort()
-	// Merge two arrais;
+	// Merge two arrays;
 		int i=0, j=0;
 		while(i<spa1.length || j<spa2.length){
 			if(j>=spa2.length || (i<spa1.length && suffixCompare(spa1[i], spa2[j])==-1)){
@@ -158,10 +158,30 @@ public class Frequencer implements FrequencerInterface{
 	// For "Ho", it will return 5  for "Hi Ho Hi Ho".
 	// For "Ho ", it will return 6 for "Hi Ho Hi Ho".
 
+	/* * * * * * * * * * * * 
+	* Linear Search
+	* * * * * * * * * * * * */
+	/*
 	for(int i=0; i<suffixArray.length; i++){
 		if(targetCompare(suffixArray[i], start, end) == 0) return i;
 	}
-	return suffixArray.length; // This line should be modified.
+	return suffixArray.length; 
+	*/
+
+	/* * * * * * * * * * * * 
+	* Binary Search
+	* * * * * * * * * * * * */
+	int index=suffixArray.length;
+	int left=0, right=suffixArray.length-1;
+	int mid=suffixArray.length/2;
+	while(left<=right){
+		mid = (left+right)/2;
+		int tComp = targetCompare(suffixArray[mid], start, end);
+		if(tComp == -1) left=mid+1;
+		else if(tComp == 1) right=mid-1;
+		else{ index=mid; right=mid-1; }
+	}
+	return index;
 	}
 
 	private int subByteEndIndex(int start, int end) {
@@ -170,11 +190,32 @@ public class Frequencer implements FrequencerInterface{
 	// For "Ho", it will return 7  for "Hi Ho Hi Ho".
 	// For "Ho ", it will return 7 for "Hi Ho Hi Ho".
 	
+	/* * * * * * * * * * * * 
+	* Linear Search
+	* * * * * * * * * * * * */
+	/*
 	for(int i=suffixArray.length-1; i>=0; i--){
 		if(targetCompare(suffixArray[i], start, end) == 0)  return i+1;
 	}
-	return suffixArray.length; // This line should be modified.
+	return suffixArray.length;
+	*/
+
+	/* * * * * * * * * * * * 
+	* Binary Search
+	* * * * * * * * * * * * */
+	int index=suffixArray.length;
+	int left=0, right=suffixArray.length-1;
+	int mid=suffixArray.length/2;
+	while(left<=right){
+		mid = (left+right)/2;
+		int tComp = targetCompare(suffixArray[mid], start, end);
+		if(tComp <= 0) left=mid+1;
+		else{ index=mid; right=mid-1; }
 	}
+	return index;
+	}
+	
+
 
 	public int subByteFrequency(int start, int end) {
 	/* This method be work as follows, but
@@ -205,7 +246,7 @@ public class Frequencer implements FrequencerInterface{
 
 	public static void main(String[] args) {
 	Frequencer frequencerObject;
-	if(args.length!=0 && args[0].equal("test")){
+	if(args.length!=0 && args[0].equals("test")){
 	try {
 		frequencerObject = new Frequencer();
 		frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
@@ -228,7 +269,6 @@ public class Frequencer implements FrequencerInterface{
 		 * Debbuging TestCase
 		 ************************************/
 		Frequencer testObj = new Frequencer();
-		System.out.println("===============================================");
 		testObj.setSpace("Hi Ho Hi Ho".getBytes());
 		testObj.setTarget("H".getBytes());
 		System.out.println("TestCase 1: ");
@@ -244,9 +284,8 @@ public class Frequencer implements FrequencerInterface{
 		System.out.println("\tsubByteStartIndex : "+testObj.subByteStartIndex(0, testObj.myTarget.length));
 		System.out.println("\n-- subByteEndIndex()");
 		System.out.println("\tsubByteEndIndex : "+testObj.subByteEndIndex(0, testObj.myTarget.length));
-		System.out.println("===============================================");
 		int result = frequencerObject.frequency();
-		System.out.print("-- Result");
+		System.out.println("-- Result");
 		System.out.print("\tFreq = "+ result+" ");
 		if(4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 

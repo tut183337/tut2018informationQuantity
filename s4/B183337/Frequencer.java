@@ -2,7 +2,6 @@ package s4.B183337;
 import java.lang.*;
 import s4.specification.*;
 
-
 /*package s4.specification;
 public interface FrequencerInterface {	   // This interface provides the design for frequency counter.
 	void setTarget(byte	 target[]); // set the data to search.
@@ -16,15 +15,12 @@ public interface FrequencerInterface {	   // This interface provides the design 
 }
 */
 
-
-
 public class Frequencer implements FrequencerInterface{
 	// Code to start with: This code is not working, but good start point to work.
 	byte [] myTarget;
 	byte [] mySpace;
 	boolean targetReady = false;
 	boolean spaceReady = false;
-
 	int []	suffixArray;
 
 	// The variable, "suffixArray" is the sorted array of all suffixes of mySpace.
@@ -33,11 +29,11 @@ public class Frequencer implements FrequencerInterface{
 	private void printSuffixArray() {
 	if(spaceReady) {
 		for(int i=0; i< mySpace.length; i++) {
-		int s = suffixArray[i];
+			int s = suffixArray[i];
 			for(int j=s;j<mySpace.length;j++) {
-			System.out.write(mySpace[j]);
+				System.out.write(mySpace[j]);
 			}
-		System.out.write('\n');
+			System.out.write('\n');
 		}
 	}
 	}
@@ -54,9 +50,6 @@ public class Frequencer implements FrequencerInterface{
 	// "i"		<  "o"		  : compare by code
 	// "Hi"		<  "Ho"		  ; if head is same, compare the next element
 	// "Ho"		<  "Ho "	  ; if the prefix is identical, longer string is big
-	//
-	// ****	 Please write code here... ***
-	//
 
 	int max_ij = Math.max(i, j);
 	for(int k=0; k<mySpace.length-max_ij; k++){
@@ -164,9 +157,7 @@ public class Frequencer implements FrequencerInterface{
 	// not implemented yet;
 	// For "Ho", it will return 5  for "Hi Ho Hi Ho".
 	// For "Ho ", it will return 6 for "Hi Ho Hi Ho".
-	//
-	// ****	 Please write code here... ***
-	//
+
 	for(int i=0; i<suffixArray.length; i++){
 		if(targetCompare(suffixArray[i], start, end) == 0) return i;
 	}
@@ -178,9 +169,7 @@ public class Frequencer implements FrequencerInterface{
 	// not implemented yet
 	// For "Ho", it will return 7  for "Hi Ho Hi Ho".
 	// For "Ho ", it will return 7 for "Hi Ho Hi Ho".
-	//
-	// ****	 Please write code here... ***
-	//
+	
 	for(int i=suffixArray.length-1; i>=0; i--){
 		if(targetCompare(suffixArray[i], start, end) == 0)  return i+1;
 	}
@@ -216,6 +205,7 @@ public class Frequencer implements FrequencerInterface{
 
 	public static void main(String[] args) {
 	Frequencer frequencerObject;
+	if(args.length!=0 && args[0].equal("test")){
 	try {
 		frequencerObject = new Frequencer();
 		frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
@@ -233,22 +223,17 @@ public class Frequencer implements FrequencerInterface{
 		   9:o
 		   A:o Hi Ho
 		*/
-		
 		frequencerObject.setTarget("H".getBytes());
-
-
-/************************************
- * Debbuging TestCase
- ************************************
-*/
-/*
-		//  TestCase 1
+		/************************************
+		 * Debbuging TestCase
+		 ************************************/
 		Frequencer testObj = new Frequencer();
+		System.out.println("===============================================");
 		testObj.setSpace("Hi Ho Hi Ho".getBytes());
-		testObj.setTarget("Ho ".getBytes());
+		testObj.setTarget("H".getBytes());
 		System.out.println("TestCase 1: ");
 		System.out.println("Space  : \"Hi Ho Hi Ho\"");
-		System.out.println("Target : \"Ho \"");
+		System.out.println("Target : \"H\"");
 		System.out.println("\n-- printSuffixArray()");
 		testObj.printSuffixArray();
 		System.out.println("\n-- targetCompare()");
@@ -260,51 +245,15 @@ public class Frequencer implements FrequencerInterface{
 		System.out.println("\n-- subByteEndIndex()");
 		System.out.println("\tsubByteEndIndex : "+testObj.subByteEndIndex(0, testObj.myTarget.length));
 		System.out.println("===============================================");
-*/
-/*	
-		//  TestCase 2
-		testObj.setSpace("Hi Ho".getBytes());
-		testObj.setTarget("Hooooo".getBytes());
-		System.out.println("TestCase 2: ");
-		System.out.println("Space  : \"Hi Ho\"");
-		System.out.println("Target : \"Hooooo\"");
-		System.out.println("\n-- printSuffixArray()");
-		testObj.printSuffixArray();
-		System.out.println("\n-- targetCompare()");
-		for(int i=0; i<testObj.suffixArray.length; i++){
-			System.out.println("\ttargetCompare[suffix[" + i + "]] : " + testObj.targetCompare(testObj.suffixArray[i], 0, testObj.myTarget.length));
-		}
-		System.out.println("\n-- subByteStartIndex()");
-		System.out.println("\tsubByteStartIndex : "+testObj.subByteStartIndex(0, testObj.myTarget.length));
-		System.out.println("\n-- subByteEndIndex()");
-		System.out.println("\tsubByteEndIndex : "+testObj.subByteEndIndex(0, testObj.myTarget.length));
-		System.out.println("==============================================="); 	();
-
-		//  TestCase 3
-		testObj.setSpace("FOOOO BAR FOOO".getBytes());
-		testObj.setTarget("OO".getBytes());
-		System.out.println("TestCase 3: ");
-		System.out.println("Space  : \"FOOOO BAR FOOO\"");
-		System.out.println("Target : \"OO\"");
-		System.out.println("\n-- printSuffixArray()");
-		testObj.printSuffixArray();
-		System.out.println("\n-- targetCompare()");
-		for(int i=0; i<testObj.suffixArray.length; i++){
-			System.out.println("\ttargetCompare[suffix[" + i + "]] : " + testObj.targetCompare(testObj.suffixArray[i], 0, testObj.myTarget.length));
-		}
-		System.out.println("\n-- subByteStartIndex()");
-		System.out.println("\tsubByteStartIndex : "+testObj.subByteStartIndex(0, testObj.myTarget.length));
-		System.out.println("\n-- subByteEndIndex()");
-		System.out.println("\tsubByteEndIndex : "+testObj.subByteEndIndex(0, testObj.myTarget.length));
-		System.out.println("==============================================="); 	();
-*/
 		int result = frequencerObject.frequency();
-		//System.out.print("Freq = "+ result+" ");
-		//if(4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+		System.out.print("-- Result");
+		System.out.print("\tFreq = "+ result+" ");
+		if(4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 
-	}
+		}
 	catch(Exception e) {
-		System.out.println("STOP" + e);
+		System.out.println("STOP");
+	}
 	}
 	}
 }

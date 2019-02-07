@@ -50,15 +50,17 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		// "iqArray" that is keeping Results of Information Quantity.
 		double [] iqArray = new double[myTarget.length+1];
 		iqArray[0] = 0.0; // "iqArray[0]" is not changed by Computing Information Quantity.
+
 		if(!targetReady) return 0.0; // When Target length is 0 or Target is not setted.
 		if(!spaceReady)  return Double.MAX_VALUE; // When Space is not setted.
 		myFrequencer.setTarget(myTarget); // Set Target that is not subByte.
+
 		// Begin Computing Information Quantity
 		for(int i=0; i<myTarget.length; i++){
 			double value=Double.MAX_VALUE; // value = minimum of each "value1".
 			for(int j=i; j>=0; j--){
 				int freq=myFrequencer.subByteFrequency(j, i+1);
-				double value1 = iqArray[j] + iq(freq);
+				double value1 = iqArray[j] + iq(freq); 
 				if(value > value1) value = value1; // "value" is replaced minimum value.
 			}
 			iqArray[i+1] = value; // Record computed Information Quantity in iqArray.

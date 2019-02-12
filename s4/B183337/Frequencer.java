@@ -151,11 +151,12 @@ public class Frequencer implements FrequencerInterface{
 			return 0;
 		}else{
 			for(j++, i++; i<mySpace.length; j++, i++){
-				if(mySpace[i] < myTarget[j])	  return  1;
+				if(mySpace[i] > myTarget[j])      return  1;
 				else if(mySpace[i] < myTarget[j]) return -1;
 			}
+			return -1;
+
 		}
-		
 	}
 	return -1;
 	}
